@@ -1,4 +1,4 @@
-package br.com.nildoSantos.controllers;
+package br.com.nildoSantos.application.controllers;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
