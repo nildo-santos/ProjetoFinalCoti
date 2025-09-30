@@ -30,6 +30,6 @@ public class EnderecoEntity {
 	private String cep;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @JoinColumn(name = "cliente", nullable = false)
     private ClienteEntity cliente;
 }

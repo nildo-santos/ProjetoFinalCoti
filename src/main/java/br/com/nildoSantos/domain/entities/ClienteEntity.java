@@ -30,6 +30,6 @@ public class ClienteEntity {
 	@Column(name = "dataNascimento")
 	private LocalDate dataNascimento;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente_id")
     List<EnderecoEntity> EnderecoEntity;
 }
