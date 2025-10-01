@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.UUID;
 @Service
-public class ClienteService implements br.com.nildoSantos.domain.interfaces.ClienteService {
+public class ClienteServiceImpl implements br.com.nildoSantos.domain.interfaces.ClienteService {
 
 
     @Override
