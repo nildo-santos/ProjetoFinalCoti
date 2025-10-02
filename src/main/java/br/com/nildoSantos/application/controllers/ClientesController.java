@@ -1,34 +1,38 @@
 package br.com.nildoSantos.application.controllers;
-
-import br.com.nildoSantos.domain.services.ClienteService;
+import br.com.nildoSantos.domain.dtos.ClienteRequest;
+import br.com.nildoSantos.domain.dtos.ClienteResponse;
+import br.com.nildoSantos.domain.services.ClienteServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
+
+import static jakarta.persistence.GenerationType.UUID;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
 public class ClientesController {
 
     @Autowired
-    private ClienteService clienteService;;
+    private ClienteServiceImpl clienteService;;
 
 	@GetMapping
 	public void get() {
 
 	}
 
-	@GetMapping("/{Id}")
-	public void getId() {
-
+	@GetMapping("/{id}")
+	public ResponseEntity<ClienteResponse> getId(UUID id) {
+        ClienteResponse response = clienteService.readById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@PostMapping
-	public void post() {
-
+	public ResponseEntity<ClienteResponse> post(@Valid @RequestBody ClienteRequest clienteRequest) {
+        ClienteResponse response = clienteService.create(clienteRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 	@PutMapping

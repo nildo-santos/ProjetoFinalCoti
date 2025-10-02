@@ -4,13 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -25,11 +19,11 @@ public class ClienteEntity {
 	private String nome;
 	@Column(name ="email", nullable = false)
 	private String email;
-	@Column(name = "cpf", unique = true, nullable = false, length = 11)
+	@Column(name = "cpf", unique = true, length = 11)
 	private String cpf;
 	@Column(name = "dataNascimento")
 	private LocalDate dataNascimento;
 
-    @OneToMany(mappedBy = "cliente_id")
-    List<EnderecoEntity> EnderecoEntity;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EnderecoEntity> enderecos;
 }

@@ -1,23 +1,22 @@
 package br.com.nildoSantos.domain.dtos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
-import lombok.Setter;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import org.hibernate.validator.constraints.br.CPF;
 
-import java.util.Date;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.List;
 
 public record ClienteRequest(
-        String nome,
-
-        String email,
-
-        String cpf,
-
-        Date dataNascimento) {
+        @NotBlank String nome,
+        @Email @NotBlank String email,
+        @NotBlank @CPF String cpf,
+        @NotNull @Past LocalDate dataNascimento,
+        @NotNull @Valid List<EnderecoRequest> enderecos
+) {
 
 
 
