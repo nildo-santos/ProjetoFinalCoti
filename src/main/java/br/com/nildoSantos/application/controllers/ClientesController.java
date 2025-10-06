@@ -1,30 +1,38 @@
 package br.com.nildoSantos.application.controllers;
-import br.com.nildoSantos.domain.dtos.ClienteRequest;
-import br.com.nildoSantos.domain.dtos.ClienteResponse;
-import br.com.nildoSantos.domain.services.ClienteServiceImpl;
+import br.com.nildoSantos.domain.dtos.request.ClienteRequest;
+import br.com.nildoSantos.domain.dtos.response.ClienteResponse;
+
+import br.com.nildoSantos.domain.interfaces.ClienteService;
+
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
 import java.util.UUID;
 
-import static jakarta.persistence.GenerationType.UUID;
-
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/clientes")
 public class ClientesController {
 
     @Autowired
-    private ClienteServiceImpl clienteService;;
+    private final ClienteService clienteService;
 
-	@GetMapping
-	public void get() {
 
-	}
+    @GetMapping
+	public ResponseEntity<List<ClienteResponse>> get() {
+       List<ClienteResponse> response = clienteService.readAll();
+	   return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ClienteResponse> getId(UUID id) {
+	public ResponseEntity<ClienteResponse> getId(@PathVariable UUID id) {
         ClienteResponse response = clienteService.readById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
 	}
