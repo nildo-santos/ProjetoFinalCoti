@@ -1,9 +1,9 @@
 package br.com.nildoSantos.domain.mapper;
 
-import br.com.nildoSantos.domain.dtos.ClienteRequest;
-import br.com.nildoSantos.domain.dtos.ClienteResponse;
-import br.com.nildoSantos.domain.dtos.EnderecoRequest;
-import br.com.nildoSantos.domain.dtos.EnderecoResponse;
+import br.com.nildoSantos.domain.dtos.request.ClienteRequest;
+import br.com.nildoSantos.domain.dtos.response.ClienteResponse;
+import br.com.nildoSantos.domain.dtos.request.EnderecoRequest;
+import br.com.nildoSantos.domain.dtos.response.EnderecoResponse;
 import br.com.nildoSantos.domain.entities.ClienteEntity;
 import br.com.nildoSantos.domain.entities.EnderecoEntity;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +23,14 @@ public class ClienteMapper {
         ClienteEntity entity = new ClienteEntity();
         
         // Mapeamento manual para garantir que os campos sejam preenchidos corretamente
-        entity.setNome(clienteRequest.nome());
-        entity.setEmail(clienteRequest.email());
-        entity.setCpf(clienteRequest.cpf());
-        entity.setDataNascimento(clienteRequest.dataNascimento());
+        entity.setNome(clienteRequest.getNome());
+        entity.setEmail(clienteRequest.getEmail());
+        entity.setCpf(clienteRequest.getCpf());
+        entity.setDataNascimento(clienteRequest.getDataNascimento());
         
         // Mapear endereços se existirem
-        if (clienteRequest.enderecos() != null && !clienteRequest.enderecos().isEmpty()) {
-            List<EnderecoEntity> enderecos = clienteRequest.enderecos().stream()
+        if (clienteRequest.getEnderecos() != null && !clienteRequest.getEnderecos().isEmpty()) {
+            List<EnderecoEntity> enderecos = clienteRequest.getEnderecos().stream()
                     .map(this::toEndereco)
                     .collect(Collectors.toList());
             enderecos.forEach(e -> e.setCliente(entity));

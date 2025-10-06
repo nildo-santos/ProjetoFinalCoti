@@ -1,17 +1,16 @@
 package br.com.nildoSantos.domain.services;
 
-import br.com.nildoSantos.domain.dtos.ClienteRequest;
-import br.com.nildoSantos.domain.dtos.ClienteResponse;
+import br.com.nildoSantos.domain.dtos.request.ClienteRequest;
+import br.com.nildoSantos.domain.dtos.response.ClienteResponse;
 import br.com.nildoSantos.domain.entities.ClienteEntity;
 import br.com.nildoSantos.domain.mapper.ClienteMapper;
 import br.com.nildoSantos.infrastructure.repositories.ClienteJpaRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.UUID;
 @Service
 @RequiredArgsConstructor
@@ -35,6 +34,13 @@ public class ClienteServiceImpl implements br.com.nildoSantos.domain.interfaces.
         return clienteJpaRepository.findById(id)
                 .map(clienteMapper::toClienteResponse)
                 .orElse(null); // ou lançar exceção customizada tipo EntityNotFoundException
+    }
+    @Override
+    public List<ClienteResponse> readAll(){
+       List<ClienteEntity> entidade = clienteJpaRepository.readAll();
+                return clienteMapper.toClienteResponse(entidade);
+
+
     }
 
     @Override
