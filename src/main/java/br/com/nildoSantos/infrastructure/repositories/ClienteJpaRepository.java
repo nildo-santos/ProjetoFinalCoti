@@ -18,4 +18,6 @@ public interface ClienteJpaRepository extends JpaRepository<ClienteEntity, UUID>
 			order by c.nome
 			""")
     List<ClienteEntity> readAll();
+
+    void delete(UUID id);
 }
