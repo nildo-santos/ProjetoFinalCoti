@@ -4,9 +4,10 @@ import br.com.nildoSantos.domain.dtos.request.ClienteRequest;
 import br.com.nildoSantos.domain.dtos.response.ClienteResponse;
 import br.com.nildoSantos.domain.entities.ClienteEntity;
 import br.com.nildoSantos.domain.entities.EnderecoEntity;
+import br.com.nildoSantos.domain.interfaces.ClienteService;
 import br.com.nildoSantos.domain.mapper.ClienteMapper;
 import br.com.nildoSantos.infrastructure.repositories.ClienteJpaRepository;
-import jakarta.persistence.Id;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ClienteServiceImpl implements br.com.nildoSantos.domain.interfaces.ClienteService {
+public class ClienteServiceImpl implements ClienteService {
     @Autowired
     private  ClienteMapper clienteMapper;
     @Autowired
     private  ClienteJpaRepository clienteJpaRepository;
+
+    @Autowired
+    private MailHogService mailHogService;
 
     @Override
     public ClienteResponse create(@Valid ClienteRequest clienteRequest) {
@@ -30,6 +34,11 @@ public class ClienteServiceImpl implements br.com.nildoSantos.domain.interfaces.
 
         ClienteEntity clienteSave = clienteJpaRepository.save(cliente);
         ClienteResponse toResponse = clienteMapper.toClienteResponse(clienteSave);
+
+
+
+       mailHogService.envioDeEmail(cliente.getEmail(), "Olá " + cliente.getNome(), "Bem vindo a Coti Informatica!");
+        
         return toResponse;
     }
 
@@ -61,7 +70,7 @@ public class ClienteServiceImpl implements br.com.nildoSantos.domain.interfaces.
             cliente.getEnderecos().clear();
             cliente.getEnderecos().addAll(novosEnderecos);
         }
-        ClienteEntity salvo = clienteJpaRepository.save(cliente);
+        clienteJpaRepository.save(cliente);
 
 
     }

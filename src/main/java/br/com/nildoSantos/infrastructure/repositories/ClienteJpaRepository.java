@@ -19,5 +19,5 @@ public interface ClienteJpaRepository extends JpaRepository<ClienteEntity, UUID>
 			""")
     List<ClienteEntity> readAll();
 
-    void delete(UUID id);
+
 }
