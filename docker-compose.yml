@@ -5,6 +5,19 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+ 
+  rabbitmq:
+    image: rabbitmq:3.13-management   # inclui a UI web
+    container_name: rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+    ports:
+      - "5672:5672"     # broker
+      - "15672:15672"   # painel http opcional
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq      # persiste filas/mensagens
 
 
   postgres-db:
@@ -22,3 +35,4 @@ services:
     
 volumes:
   postgres_data:
+  rabbitmq_data:
